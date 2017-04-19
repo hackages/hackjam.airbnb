@@ -1,0 +1,121 @@
+<nav class="nav has-shadow" id="top">
+  <div class="container">
+    <div class="nav-left">
+      <a class="nav-item" href="#">
+        <img
+          src='http://static1.squarespace.com/static/57b995c42994cac731af81e2/t/57dc6fac6a49637fdbf20f92/1489060595275/?format=1500w'
+          alt="Hackages logo">
+      </a>
+    </div>
+    <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
+    <!-- You need toggle the "is-active" class on "nav-menu" -->
+    <span class="nav-toggle" click="showNavMenuOnMobile">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    <div class="nav-right nav-menu" class="toggleNavMenu is-active">
+      <a class="nav-item is-tab is-active">
+        Home
+      </a>
+      <span class="nav-item">
+          <a class="button">
+            Log in
+          </a>
+          <a class="button is-info">
+            Sign up
+          </a>
+        </span>
+    </div>
+  </div>
+</nav>
+<section class="section">
+  <div class="container content">
+    <div class="columns">
+      <div class="column">
+        <div class="field">
+          <label class="label">Minimum Price</label>
+          <p class="control">
+            <input class="input" type="text" placeholder="minimum">
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">Maximum Price</label>
+          <p class="control">
+            <input class="input"
+                   type="text"
+                   placeholder="maximum">
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">Room types</label>
+          <ng-template ngFor let-type ngForOf="getRoomTypesKey()" let-i="index">
+            <p class="control">
+              <label class="checkbox">
+                <input type="checkbox"
+                       name="type"
+                       checked="roomTypesSelected[type]"
+                       click="onSelectRoomType()">
+                {{type}}
+              </label>
+            </p>
+          </ng-template>
+        </div>
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-primary" click="filterEstate">Refresh</button>
+          </p>
+          <p class="control">
+            <button class="button is-link" click="resetFilters">Reset</button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container content">
+    <div class="columns">
+      <div class="column is-4" ngFor="estate in estates">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <!-- estate.pictureUrl could be null so we have to display the placeholder-->
+              <img ngIf="!estate.pictureUrl"
+                   src="http://bulma.io/images/placeholders/1280x960.png"
+                   alt="Image"/>
+              <img ngIf="estate.pictureUrl"
+                   src="estate.pictureUrl"
+                   alt="Image"/>
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">{{estate.title}}</p>
+                <p class="subtitle is-6 is-link"
+                   click="showHostName(estate.userInfo.name)">
+                  @{{estate.userInfo.name}}
+                </p>
+              </div>
+              <div class="media-right">
+                <figure class="image is-48x48">
+                  <img src="estate.userInfo.picture.thumbnail" alt="Image">
+                </figure>
+              </div>
+            </div>
+
+            <div class="content">
+              <small>
+                {{estate.roomType}}
+                -
+                {{estate.userInfo.location.city}},
+                {{estate.userInfo.location.state}}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
